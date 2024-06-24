@@ -1,5 +1,6 @@
 import $ from "jquery";
 import _ from "lodash";
+import '../css/main.css';
 
 
 $('body').append('<div id="logo"></div>')
