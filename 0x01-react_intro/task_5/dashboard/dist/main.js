@@ -1,0 +1,1 @@
+document.getElementById("root").appendChild(function(){const e=document.createElement("div");return e.innerHTML="Hello, webpack!",e.classList.add("hello"),e}());
