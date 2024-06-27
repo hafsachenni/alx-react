@@ -1,1 +1,3 @@
-console.log('Hello, webpack!');
+function greet(name) {
+    return `Hello!`;
+}
