@@ -1,29 +1,73 @@
-import { shallow } from 'enzyme';
 import React from 'react';
+import { shallow } from 'enzyme';
 import CourseList from './CourseList';
-import CourseListRow from './CourseListRow';
 
+describe('<CourseList />', () => {
+  const wrapper = shallow(<CourseList />);
+  it('renders without crashing', () => {
+    expect(wrapper.exists());
+  });
 
-test('checking if CourseList component renders without crashing', () => {
-    shallow(<CourseList />);
+  it('renders rows', () => {
+    const row = wrapper.find('CourseListRow');
+    expect(row.at(0).prop('textFirstCell')).toEqual('Available courses');
+    expect(row.at(0).prop('isHeader')).toEqual(true);
+    expect(row.at(1).prop('textFirstCell')).toEqual('Course name');
+    expect(row.at(1).prop('textSecondCell')).toEqual('Credit');
+    expect(row.at(1).prop('isHeader')).toEqual(true);
+    expect(row.at(2).prop('isHeader')).toEqual(false);
+  });
 });
 
-  
-test('checking that CourseList component renders the 5 different rows', () => {
-    const rows = wrapper.find('CourseListRow');
-    expect(rows).toHaveLength(5);
-    expect(rows.at(0).prop('textFirstCell')).toEqual('Available courses');
-    expect(rows.at(0).prop('isHeader')).toEqual(true);
-    expect(rows.at(1).prop('textFirstCell')).toEqual('Course name');
-    expect(rows.at(1).prop('textSecondCell')).toEqual('Credit');
-    expect(rows.at(1).prop('isHeader')).toEqual(true);
-    expect(rows.at(2).prop('textFirstCell')).toEqual('ES6');
-    expect(rows.at(2).prop('textSecondCell')).toEqual('60');
-    expect(rows.at(2).prop('isHeader')).toEqual(false);
-    expect(rows.at(3).prop('textFirstCell')).toEqual('Webpack');
-    expect(rows.at(3).prop('textSecondCell')).toEqual('20');
-    expect(rows.at(3).prop('isHeader')).toEqual(false);
-    expect(rows.at(4).prop('textFirstCell')).toEqual('React');
-    expect(rows.at(4).prop('textSecondCell')).toEqual('40');
-    expect(rows.at(4).prop('isHeader')).toEqual(false);
+describe('listCourses with values', () => {
+  let listCourses = undefined;
+  beforeEach(() => {
+    listCourses = [
+      { id: 1, name: 'ES6', credit: 60 },
+      { id: 2, name: 'Webpack', credit: 20 },
+      { id: 3, name: 'React', credit: 40 },
+    ];
+  });
+
+  it('rows', () => {
+    const wrapper = shallow(<CourseList listCourses={listCourses} />);
+    const row = wrapper.find('CourseListRow');
+    expect(row).toHaveLength(5);
+    expect(row.at(0).prop('textFirstCell')).toEqual('Available courses');
+    expect(row.at(0).prop('isHeader')).toEqual(true);
+    expect(row.at(1).prop('textFirstCell')).toEqual('Course name');
+    expect(row.at(1).prop('textSecondCell')).toEqual('Credit');
+    expect(row.at(1).prop('isHeader')).toEqual(true);
+    expect(row.at(2).prop('textFirstCell')).toEqual('ES6');
+    expect(row.at(2).prop('textSecondCell')).toEqual(60);
+    expect(row.at(2).prop('isHeader')).toEqual(false);
+    expect(row.at(3).prop('textFirstCell')).toEqual('Webpack');
+    expect(row.at(3).prop('textSecondCell')).toEqual(20);
+    expect(row.at(3).prop('isHeader')).toEqual(false);
+    expect(row.at(4).prop('textFirstCell')).toEqual('React');
+    expect(row.at(4).prop('textSecondCell')).toEqual(40);
+    expect(row.at(4).prop('isHeader')).toEqual(false);
+  });
+});
+
+describe('listCourses without values', () => {
+  let listCourses = undefined;
+  beforeEach(() => {
+    listCourses = [];
+  });
+
+  it('empty', () => {
+    const wrapper = shallow(<CourseList listCourses={listCourses} />);
+    expect(wrapper.exists());
+    const row = wrapper.find('CourseListRow');
+    expect(row).toHaveLength(3);
+    expect(row.at(0).prop('textFirstCell')).toEqual('Available courses');
+    expect(row.at(0).prop('isHeader')).toEqual(true);
+    expect(row.at(1).prop('textFirstCell')).toEqual('Course name');
+    expect(row.at(1).prop('textSecondCell')).toEqual('Credit');
+    expect(row.at(1).prop('isHeader')).toEqual(true);
+    expect(row.at(2).prop('textFirstCell')).toEqual('No course available yet');
+    expect(row.at(2).prop('textSecondCell')).toEqual(null);
+    expect(row.at(2).prop('isHeader')).toEqual(false);
+  });
 });
