@@ -1,12 +1,16 @@
-.App-logo{
-    width: 150px;
-  }
-  .App-header{
-    display: flex;
-    color: red;
-    border-bottom: 3px solid red;
-    align-items: center;
-  }
-.App-header h1 {
-    margin: 0;
+.header {
+  display: flex;
+  color: #e0344a;
+  align-items: center;
+  border-bottom: thick solid #e0344a;
+  width: 100%;
+  position: fixed;
+}
+
+.header img {
+  width: 144px;
+}
+
+.header h1 {
+  margin: 0;
 }

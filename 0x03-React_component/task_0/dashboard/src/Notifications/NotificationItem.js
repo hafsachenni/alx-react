@@ -13,7 +13,6 @@ function NotificationItem({ type, html, value }) {
   return li;
 }
 
-
 NotificationItem.defaultProps = {
   type: 'default',
   value: '',
