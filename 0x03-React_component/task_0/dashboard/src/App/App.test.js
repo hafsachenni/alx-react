@@ -1,37 +1,40 @@
 import { shallow } from 'enzyme';
+import React from 'react';
 import App from './App';
 
-test('testing that App renders without crashing', () => {
-    shallow(<App />);
-});
+describe('<App />', () => {
+  it('renders without crashing', () => {
+    const wrapper = shallow(<App />);
+  });
 
-test('checking if app contain the Notifications component', () => {
-    const app = shallow(<App />);
-    expect(app.find('Notifications')).toHaveLength(1);
-});
+  it('contain Notifications component', () => {
+    const wrapper = shallow(<App />);
+    expect(wrapper.find('Notifications')).toHaveLength(1);
+  });
 
-test('checking if app contain the Header component', () => {
-    const app = shallow(<App />);
-    expect(app.find('Header')).toHaveLength(1);
-});
+  it('contain Header component', () => {
+    const wrapper = shallow(<App />);
+    expect(wrapper.find('Header')).toHaveLength(1);
+  });
 
-test('checking if app contain the Login component', () => {
-    const app = shallow(<App />);
-    expect(app.find('Login')).toHaveLength(1);
-});
+  it('contain Login component', () => {
+    const wrapper = shallow(<App />);
+    expect(wrapper.find('Login')).toHaveLength(1);
+  });
 
-test('checking if app contain the Footer component', () => {
-    const app = shallow(<App />);
-    expect(app.find('Footer')).toHaveLength(1);
-});
+  it('contain Footer component', () => {
+    const wrapper = shallow(<App />);
+    expect(wrapper.find('Footer')).toHaveLength(1);
+  });
 
-test('CourseList with isLoggedIn false', () => {
-    const app = shallow(<App />);
-    expect(app.find('CourseList')).toHaveLength(0);
-});
+  it('CourseList', () => {
+    const wrapper = shallow(<App />);
+    expect(wrapper.find('CourseList')).toHaveLength(0);
+  });
 
-test('isLoggedIn is true', () => {
-    const app = shallow(<App isLoggedIn />);
-    expect(app.find('Login')).toHaveLength(0);
-    expect(app.find('CourseList')).toHaveLength(1);
+  it('isLoggedIn true', () => {
+    const wrapper = shallow(<App isLoggedIn />);
+    expect(wrapper.find('Login')).toHaveLength(0);
+    expect(wrapper.find('CourseList')).toHaveLength(1);
+  });
 });
