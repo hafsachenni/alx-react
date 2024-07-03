@@ -1,17 +1,14 @@
-import logo from './logo.jpg';
-import './App.css';
-import { getFullYear, getFooterCopy } from './utils';
+import React from 'react';
+import './Header.css';
+import logo from '../assets/logo.jpg';
 
-
-function App() {
+function Header() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>School dashboard</h1>
-      </header>
-    </div>
+    <header className='header'>
+      <img src={logo} alt='logo' />
+      <h1>School dashboard</h1>
+    </header>
   );
 }
 
-export default App;
+export default Header;
