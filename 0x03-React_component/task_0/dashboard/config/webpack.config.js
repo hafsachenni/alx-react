@@ -5,7 +5,11 @@ module.exports = {
   devtool: 'inline-source-map',
   entry: './src/index.js',
   output: {
+<<<<<<< HEAD
     filename: 'bundle.js',
+=======
+    filename: 'bundle.js', 
+>>>>>>> f0e454633275ccc149aa843bec9a7e511ff78487
     path: path.resolve('./dist'),
   },
   devServer: {
