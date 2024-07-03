@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 import Header from '../Header/Header';
 import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
@@ -18,18 +18,21 @@ function App({ isLoggedIn }) {
     { id: 2, type: 'urgent', value: 'New resume available' },
     { id: 3, type: 'urgent', html: { __html: getLatestNotification() } },
   ];
-  let component = undefined;
-  isLoggedIn
-    ? (component = <CourseList listCourses={listCourses} />)
-    : (component = <Login />);
-  return (
-    <>
-      <Notifications listNotifications={listNotifications} />
-      <Header />
-      {component}
-      <Footer />
-    </>
-  );
+  class App extends Component {
+	constructor(props) {
+	  super(props);
+        }
+	render(){
+	const { isLoggedIn } = this.props;
+	return (
+	  <Fragment>
+            <Notifications listNotifications={listNotifications} />
+	    <Header />
+	    {isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
+	    <Footer />
+	  </Fragment>
+        );
+      }
 }
 
 App.defaultProps = {
