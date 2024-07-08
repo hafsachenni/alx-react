@@ -1,27 +1,32 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 import { StyleSheet, css } from "aphrodite";
 
+
 const styles = StyleSheet.create({
-  notification: {
-    cursor: 'pointer',
-    borderRadius: '5px',
+  default: {
+    color: "blue",
   },
   urgent: {
-    color: 'red',
-  },
-  default: {
-    color: 'blue',
+    color: "red",
   },
 });
 
-const NotificationItem = React.memo(({ type, html, id, value, markAsRead }) => {
-  let li;
+const NotificationItem = React.memo(function NotificationItem({
+  type,
+  value,
+  html,
+  markAsRead,
+  id,
+}) {
+  let listItem;
+
+  let style = css(type === "urgent" ? styles.urgent : styles.default);
 
   if (value) {
-    li = (
+    listItem = (
       <li
-        className={css(styles.notification, type === 'urgent' && styles.urgent, type === 'default' && styles.default)}
+        className={style}
         data-notification-type={type}
         onClick={() => markAsRead(id)}
       >
@@ -29,9 +34,9 @@ const NotificationItem = React.memo(({ type, html, id, value, markAsRead }) => {
       </li>
     );
   } else {
-    li = (
+    listItem = (
       <li
-        className={css(styles.notification, type === 'urgent' && styles.urgent, type === 'default' && styles.default)}
+        className={style}
         data-notification-type={type}
         dangerouslySetInnerHTML={html}
         onClick={() => markAsRead(id)}
@@ -39,12 +44,12 @@ const NotificationItem = React.memo(({ type, html, id, value, markAsRead }) => {
     );
   }
 
-  return li;
+  return listItem;
 });
 
 NotificationItem.defaultProps = {
-  type: 'default',
-  value: '',
+  type: "default",
+  value: "",
   html: {},
   markAsRead: () => {},
   id: NaN,
@@ -59,5 +64,6 @@ NotificationItem.propTypes = {
   markAsRead: PropTypes.func,
   id: PropTypes.number,
 };
+
 
 export default NotificationItem;
