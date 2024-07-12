@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, useState } from 'react';
 import { css, StyleSheet } from 'aphrodite';
 import Header from '../Header/Header';
 import Login from '../Login/Login';
@@ -9,6 +9,8 @@ import PropTypes from 'prop-types';
 import { getLatestNotification } from '../utils/utils';
 import BodySection from '../BodySection/BodySection';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
+
+
 
 const listCourses = [
   { id: 1, name: 'ES6', credit: 60 },
@@ -47,6 +49,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
+    this.handleHideDrawer = this.handleHideDrawer.bind(this);
+    this.state = { displayDrawer: false };
   }
 
   componentDidMount() {
@@ -64,11 +69,24 @@ class App extends Component {
       this.props.logOut();
     }
   }
+
+  handleDisplayDrawer() {
+    this.setState({ displayDrawer: true });
+  }
+  handleHideDrawer() {
+    this.setState({ displayDrawer: false });
+  }
+
+  
   render() {
-    const { isLoggedIn } = this.props;
+    const { isLoggedIn, logOut } = this.props;
+    const { displayDrawer } = this.state;
     return (
       <Fragment>
-        <Notifications listNotifications={listNotifications} />
+        <Notifications listNotifications={listNotifications}
+        displayDrawer={displayDrawer}
+        handleDisplayDrawer={this.handleDisplayDrawer}
+        handleHideDrawer={this.handleHideDrawer}/>
         <Header />
         <div className={css(styles.body)}>
           {!isLoggedIn ? (
