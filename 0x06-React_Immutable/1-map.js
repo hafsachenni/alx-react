@@ -1,5 +1,7 @@
 const Immutable = require('immutable');
 
-export default function getImmutableObject(){
-    Immutable.Map(object)
-}
+const getImmutableObject = (object) => {
+  return Immutable.Map(object);
+};
+
+module.exports = getImmutableObject;
