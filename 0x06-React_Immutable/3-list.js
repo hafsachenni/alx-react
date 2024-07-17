@@ -6,6 +6,5 @@ export function getListObject (array) {
 }
 
 export function addElementToList (list, element) {
-  const mappedlist = list.push(element);
-  return mappedlist;
+  return list.push(element);
 }
