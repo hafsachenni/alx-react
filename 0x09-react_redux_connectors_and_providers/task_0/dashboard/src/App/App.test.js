@@ -1,6 +1,14 @@
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import React from 'react';
 import App from './App';
+import { fromJS } from "immutable";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import { mapStateToProps } from './App';
+import uiReducer from "../reducers/uiReducer";
+
+
+const store = createStore(uiReducer, initialState);
 
 describe('<App />', () => {
   it('renders without crashing', () => {
@@ -130,4 +138,14 @@ describe('<App />', () => {
       listNotificationsInitialState.slice(1, 2)
     );
   });
-});
+
+
+  
+  test("verifying that mapStateToProps returns the right object", () => {
+      let state = fromJS({
+        isUserLoggedIn: true,
+      });
+      const props = mapStateToProps(state);
+      expect(props).toEqual({ isLoggedIn: true });
+    })
+  });
