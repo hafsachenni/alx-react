@@ -10,6 +10,7 @@ import BodySection from '../BodySection/BodySection';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 import AppContext, { user as defaultUser } from "./AppContext";
 import { connect } from "react-redux";
+import {displayNotificationDrawer, hideNotificationDrawer} from "../actions/uiActionCreators";
 
 
 const listCourses = [
@@ -110,6 +111,7 @@ class App extends Component {
   render() {
     const { user, user: { isLoggedIn }, displayDrawer, listNotifications } = this.state;
     const value = { user, logOut: this.logOut };
+    const { displayNotificationDrawer, hideNotificationDrawer } = this.props;
     
     return (
       <AppContext.Provider value={value}>
@@ -152,4 +154,8 @@ export const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(App);
+export const mapDispatchToProps = {
+  displayNotificationDrawer,
+  hideNotificationDrawer,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(App);
