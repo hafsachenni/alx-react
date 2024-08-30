@@ -8,7 +8,7 @@ import { mapStateToProps } from './App';
 import uiReducer from "../reducers/uiReducer";
 
 
-const store = createStore(uiReducer, initialState);
+const store = createStore(uiReducer);
 
 describe('<App />', () => {
   it('renders without crashing', () => {
@@ -148,4 +148,12 @@ describe('<App />', () => {
       const props = mapStateToProps(state);
       expect(props).toEqual({ isLoggedIn: true });
     })
-  });
+
+  test("verifying that mapStateToProps returns the right object from displayDrawer", () => {
+      let state = fromJS({
+        isNotificationDrawerVisible: true,
+      });
+      const result = mapStateToProps(state);
+      expect(result).toEqual({ displayDrawer: true });
+    });
+  })
