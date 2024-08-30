@@ -6,7 +6,7 @@ import closeIcon from "../assets/close-icon.png";
 import { StyleSheet, css } from "aphrodite";
 import NotificationItem from "./NotificationItem";
 import { connect } from "react-redux";
-import { FETCH_NOTIFICATIONS_SUCCESS } from "../actions/notificationActionCreators";
+import { fetchNotifications } from "../actions/notificationActionCreators";
 
 const screenSize = {
   small: "@media screen and (max-width: 900px)",
@@ -191,7 +191,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  FETCH_NOTIFICATIONS_SUCCESS,
+  fetchNotifications,
 };
 
 
