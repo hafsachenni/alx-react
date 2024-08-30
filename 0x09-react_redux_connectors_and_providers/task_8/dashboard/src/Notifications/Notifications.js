@@ -7,7 +7,7 @@ import { StyleSheet, css } from "aphrodite";
 import { getUnreadNotifications } from "../selectors/notificationSelector";
 import NotificationItem from "./NotificationItem";
 import { connect } from "react-redux";
-import {fetchNotifications, markAsAread} from "../actions/notificationActionCreators";
+import {fetchNotifications, markAsAread, setNotificationFilter} from "../actions/notificationActionCreators";
 
 const screenSize = {
   small: "@media screen and (max-width: 900px)",
@@ -146,6 +146,26 @@ export class Notifications extends Component {
             <p className={css(styles.notificationsP)}>
               Here is the list of notifications
             </p>
+            <button
+              type="button"
+              className={css(styles.filterButton)}
+              id="buttonFilterUrgent"
+              onClick={() => {
+                setNotificationFilter("URGENT");
+              }}
+            >
+              ❗❗
+            </button>
+            <button
+              type="button"
+              className={css(styles.filterButton)}
+              id="buttonFilterDefault"
+              onClick={() => {
+                setNotificationFilter("DEFAULT");
+              }}
+            >
+              💠
+            </button>
             <ul className={css(styles.notificationsUL)}>
               {listNotifications.length === 0 && (
                 <NotificationItem value="No new notification for now" />
@@ -175,6 +195,7 @@ Notifications.defaultProps = {
   handleHideDrawer: () => {},
   markNotificationAsRead: () => {},
   fetchNotifications: () => {},
+  setNotificationFilter: () => {},
 };
 
 Notifications.propTypes = {
@@ -182,7 +203,8 @@ Notifications.propTypes = {
   listNotifications: PropTypes.arrayOf(NotificationItemShape),
   handleDisplayDrawer: PropTypes.func,
   handleHideDrawer: PropTypes.func,
-  markNotificationAsRead: PropTypes.func, 
+  markNotificationAsRead: PropTypes.func,
+  setNotificationFilter: PropTypes.func,
 };
 
 
@@ -196,6 +218,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   fetchNotifications,
   markNotificationAsRead: markAsAread,
+  setNotificationFilter,
 };
 
 
