@@ -1,9 +1,12 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent, Component } from "react";
 import NotificationItem from "./NotificationItem";
 import PropTypes from "prop-types";
 import NotificationItemShape from "./NotificationItemShape";
 import closeIcon from "../assets/close-icon.png";
 import { StyleSheet, css } from "aphrodite";
+import NotificationItem from "./NotificationItem";
+import { connect } from "react-redux";
+import { FETCH_NOTIFICATIONS_SUCCESS } from "../actions/notificationActionCreators";
 
 const screenSize = {
   small: "@media screen and (max-width: 900px)",
@@ -100,7 +103,14 @@ const styles = StyleSheet.create({
   },
 });
 
-class Notifications extends PureComponent {
+class Notifications extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    this.props.fetchNotifications();
+  }
   render() {
     const { displayDrawer, listNotifications, handleDisplayDrawer, handleHideDrawer, markNotificationAsRead } = this.props;
 
@@ -173,4 +183,16 @@ Notifications.propTypes = {
   markNotificationAsRead: PropTypes.func, 
 };
 
-export default Notifications;
+
+const mapStateToProps = (state) => {
+  return {
+    listNotifications: state.notifications.get("messages"),
+  };
+};
+
+const mapDispatchToProps = {
+  FETCH_NOTIFICATIONS_SUCCESS,
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Notifications);
