@@ -6,13 +6,11 @@ import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
 import Notifications from '../Notifications/Notifications';
 import CourseList from '../CourseList/CourseList';
-import { getLatestNotification } from '../utils/utils';
 import BodySection from '../BodySection/BodySection';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 import AppContext, { user as defaultUser } from "./AppContext";
 import { connect } from "react-redux";
-import {displayNotificationDrawer, hideNotificationDrawer, loginRequest, logout} from "../actions/uiActionCreators";
-
+import { displayNotificationDrawer, hideNotificationDrawer, loginRequest, logout } from "../actions/uiActionCreators";
 
 const listCourses = [
   { id: 1, name: 'ES6', credit: 60 },
@@ -47,18 +45,10 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
     this.state = {
       user: defaultUser,
-      listNotifications: [
-        { id: 1, type: 'default', value: 'New course available' },
-        { id: 2, type: 'urgent', value: 'New resume available' },
-        { id: 3, type: 'urgent', html: { __html: getLatestNotification() } },
-      ],
     };
   }
-
-  
 
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown);
@@ -75,33 +65,24 @@ class App extends Component {
     }
   }
 
-
-  markNotificationAsRead(id) {
-    this.setState(prevState => ({
-      listNotifications: prevState.listNotifications.filter(notification => notification.id !== id),
-    }));
-  }
-
   render() {
-    const { user, user: { isLoggedIn }, displayDrawer, listNotifications } = this.state;
+    const { user, user: { isLoggedIn } } = this.state;
     const value = { user: this.state.user };
-    const { displayNotificationDrawer, hideNotificationDrawer, login, logout} = this.props;
-    
+    const { displayNotificationDrawer, hideNotificationDrawer, login, logout } = this.props;
+
     return (
       <AppContext.Provider value={value}>
         <Fragment>
           <Notifications
-            listNotifications={listNotifications}
-            displayDrawer={displayDrawer}
-            handleDisplayDrawer={this.handleDisplayDrawer}
-            handleHideDrawer={this.handleHideDrawer}
-            markNotificationAsRead={this.markNotificationAsRead} // Pass the function here
+            displayDrawer={this.props.displayDrawer}
+            handleDisplayDrawer={displayNotificationDrawer}
+            handleHideDrawer={hideNotificationDrawer}
           />
           <Header />
           <div className={css(styles.body)}>
             {!isLoggedIn ? (
               <BodySectionWithMarginBottom title="Log in to continue">
-                <Login logIn={this.login} />
+                <Login logIn={login} />
               </BodySectionWithMarginBottom>
             ) : (
               <BodySectionWithMarginBottom title="Course list">
@@ -139,7 +120,6 @@ App.propTypes = {
   logout: PropTypes.func,
 };
 
-
 export const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.get("isUserLoggedIn"),
@@ -153,4 +133,5 @@ export const mapDispatchToProps = {
   login: loginRequest,
   logout,
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(App);
